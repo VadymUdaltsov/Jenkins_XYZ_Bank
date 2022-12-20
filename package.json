@@ -1,0 +1,24 @@
+{
+  "name": "XYZ_Bank",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "playwright": "^1.28.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.28.1"
+  },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VadymUdaltsov/Jenkins_XYZ_Bank.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VadymUdaltsov/Jenkins_XYZ_Bank/issues"
+  },
+  "homepage": "https://github.com/VadymUdaltsov/Jenkins_XYZ_Bank#readme"
+}

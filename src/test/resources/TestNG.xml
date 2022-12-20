@@ -2,8 +2,8 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
 
-<suite name="All Test Suite">
-    <test verbose="2" preserve-order="true" name="D:/JavaProject/XYZ_Bank">
+<suite name="Test Suites">
+    <test verbose="2" thread-count="4" name="D:/JavaProject/XYZ_Bank">
         <classes>
             <class name="VerifyAllActionsForAccountWhenLoginAsManagerTest"/>
             <class name="VerifyAllActionsForAccountWhenLoginAsCustomerTest"/>

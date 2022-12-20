@@ -6,7 +6,7 @@ import static com.codeborne.selenide.Selenide.$x;
 
 public class ManagerCustomersPage extends ManagerHomePage {
     private final SelenideElement searchCustomerInput = $x("//input[@placeholder='Search Customer']");
-    private final SelenideElement deleteAccountButton = $x("//button[text()='Delete']");
+    private final SelenideElement deleteAccountButton = $x("//button[@ng-click='deleteCust(cust)']");
 
     public void findAccount(String firstName) {
         searchCustomerInput.setValue(firstName);
