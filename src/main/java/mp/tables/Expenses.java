@@ -14,6 +14,19 @@ public class Expenses {
     private int house;
     private int cat;
 
+    public Expenses() {
+    }
+
+    public Expenses(int year, Month month, int food, int accountant, int phone, int internet, int house, int cat) {
+        this.year = year;
+        this.month = month;
+        this.food = food;
+        this.accountant = accountant;
+        this.phone = phone;
+        this.internet = internet;
+        this.house = house;
+        this.cat = cat;
+    }
 
     public int getYear() {
         return year;
