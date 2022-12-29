@@ -1,11 +1,13 @@
 package mp.dao;
 
-import mp.tables.Worker;
+import mp.tables.Expenses;
+
+import java.util.List;
 
 public interface ExpensesDAO {
 
-    void getExpensesForMonth(int year, String month);
+    Expenses getExpensesForMonth(int year, String month);
 
-    void getExpensesForYear(int year);
+    List<Expenses> getExpensesForYear(int year);
 
 }
