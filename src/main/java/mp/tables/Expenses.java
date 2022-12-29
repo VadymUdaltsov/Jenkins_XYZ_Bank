@@ -93,4 +93,18 @@ public class Expenses {
     public int hashCode() {
         return Objects.hash(year, month, food, accountant, phone, internet, house, cat);
     }
+
+    @Override
+    public String toString() {
+        return "Expenses{" +
+                "year=" + year +
+                ", month=" + month +
+                ", food=" + food +
+                ", accountant=" + accountant +
+                ", phone=" + phone +
+                ", internet=" + internet +
+                ", house=" + house +
+                ", cat=" + cat +
+                '}';
+    }
 }

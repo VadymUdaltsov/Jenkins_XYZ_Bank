@@ -16,6 +16,14 @@ public enum Month {
 
     private String title;
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     Month(String title) {
         this.title = title;
     }
