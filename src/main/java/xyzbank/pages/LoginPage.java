@@ -1,4 +1,4 @@
-package pages;
+package xyzbank.pages;
 
 
 import com.codeborne.selenide.Selenide;

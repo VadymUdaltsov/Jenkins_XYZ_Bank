@@ -1,13 +1,14 @@
+package xyzbanktest;
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import data.Customer;
+import xyzbank.data.Customer;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.ManagerAddAccountPage;
-import pages.ManagerCustomersPage;
-import pages.LoginPage;
-import pages.ManagerOpenAccountPage;
+import xyzbank.pages.ManagerAddAccountPage;
+import xyzbank.pages.ManagerCustomersPage;
+import xyzbank.pages.LoginPage;
+import xyzbank.pages.ManagerOpenAccountPage;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.codeborne.selenide.Selenide.$x;
-import static data.UserData.*;
+import static xyzbank.data.UserData.*;
 
 public class VerifyAllActionsForAccountWhenLoginAsManagerTest extends BaseTest {
     private int customerNumberAtFile;
@@ -29,7 +30,7 @@ public class VerifyAllActionsForAccountWhenLoginAsManagerTest extends BaseTest {
 
     private void writeCustomerInfoToFile(String name, String lastName, String id) throws IOException {
         Customer customer = new Customer(name, lastName, id);
-        FileWriter writer = new FileWriter("D:\\JavaProject\\XYZ_Bank\\src\\main\\java\\data\\Users", true);
+        FileWriter writer = new FileWriter("D:\\JavaProject\\XYZ_Bank\\src\\main\\java\\xyzbank\\data\\Users", true);
         customerNumberAtFile++;
         writer.write(customerNumberAtFile + ": " + customer + '\n');
         writer.write(String.valueOf(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES)) + '\n');

@@ -1,4 +1,4 @@
-package utils;
+package xyzbank.utils;
 
 import java.util.Map;
 

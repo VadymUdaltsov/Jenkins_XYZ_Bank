@@ -1,4 +1,4 @@
-package data;
+package xyzbank.data;
 
 public class UserData {
     public static final String FIRST_NAME = "Vadym";

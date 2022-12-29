@@ -2,11 +2,11 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
 
-<suite name="Test Suites">
+<suite name="Suites">
     <test verbose="2" thread-count="4" name="D:/JavaProject/XYZ_Bank">
         <classes>
-            <class name="VerifyAllActionsForAccountWhenLoginAsManagerTest"/>
-            <class name="VerifyAllActionsForAccountWhenLoginAsCustomerTest"/>
+            <class name="xyzbanktest.VerifyAllActionsForAccountWhenLoginAsManagerTest"/>
+            <class name="xyzbanktest.VerifyAllActionsForAccountWhenLoginAsCustomerTest"/>
         </classes>
     </test>
 </suite>

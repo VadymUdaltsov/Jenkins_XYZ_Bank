@@ -1,6 +1,4 @@
-package data;
-
-import java.util.Objects;
+package xyzbank.data;
 
 public class Customer {
     private final String name;

@@ -1,12 +1,15 @@
+package xyzbanktest;
+
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
+import org.json.simple.JSONObject;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.LoginPage;
-import pages.ManagerAddAccountPage;
-import pages.ManagerCustomersPage;
+import xyzbank.pages.LoginPage;
+import xyzbank.pages.ManagerAddAccountPage;
+import xyzbank.pages.ManagerCustomersPage;
 
 
 import java.time.Duration;
@@ -14,8 +17,8 @@ import java.time.Duration;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
-import static data.UserData.*;
-import static data.UserData.POST_CODE;
+import static xyzbank.data.UserData.*;
+import static xyzbank.data.UserData.POST_CODE;
 
 public class VerifyAllActionsForAccountWhenLoginAsCustomerTest {
     private static final SelenideElement fieldWithBalanceOfMoney = $x("//strong[@class='ng-binding'][2]");

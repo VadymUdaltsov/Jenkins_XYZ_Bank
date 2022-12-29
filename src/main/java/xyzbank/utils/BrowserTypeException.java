@@ -1,4 +1,4 @@
-package utils;
+package xyzbank.utils;
 
 public class BrowserTypeException extends Exception implements IBrowserProcessor{
     private final String errorMessage;
