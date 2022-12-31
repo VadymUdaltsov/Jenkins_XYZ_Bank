@@ -25,10 +25,10 @@ public class ExpensesServiceMySQL implements ExpensesDAO {
         try {
             CONNECTION = DriverManager.getConnection(URL, LOGIN, PASSWORD);
 
-            preparedStatement = CONNECTION.prepareStatement("SELECT * FROM monthly_expenses WHERE year = ? AND month = ?");
-            preparedStatement.setInt(1, year);
-            preparedStatement.setString(2, month);
-            final ResultSet resultSet = preparedStatement.executeQuery();
+            PREPARED_STATEMENT = CONNECTION.prepareStatement("SELECT * FROM monthly_expenses WHERE year = ? AND month = ?");
+            PREPARED_STATEMENT.setInt(1, year);
+            PREPARED_STATEMENT.setString(2, month);
+            final ResultSet resultSet = PREPARED_STATEMENT.executeQuery();
 
             Expenses expenses = new Expenses();
 
@@ -41,7 +41,7 @@ public class ExpensesServiceMySQL implements ExpensesDAO {
             throw new RuntimeException(e);
         } finally {
             try {
-                preparedStatement.close();
+                PREPARED_STATEMENT.close();
                 CONNECTION.close();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -59,9 +59,9 @@ public class ExpensesServiceMySQL implements ExpensesDAO {
         try {
             CONNECTION = DriverManager.getConnection(URL, LOGIN, PASSWORD);
 
-            preparedStatement = CONNECTION.prepareStatement("SELECT * FROM monthly_expenses WHERE year = ?");
-            preparedStatement.setInt(1, year);
-            final ResultSet resultSet = preparedStatement.executeQuery();
+            PREPARED_STATEMENT = CONNECTION.prepareStatement("SELECT * FROM monthly_expenses WHERE year = ?");
+            PREPARED_STATEMENT.setInt(1, year);
+            final ResultSet resultSet = PREPARED_STATEMENT.executeQuery();
 
             List<Expenses> fullYear = new ArrayList<>();
 
@@ -76,7 +76,7 @@ public class ExpensesServiceMySQL implements ExpensesDAO {
             throw new RuntimeException(e);
         } finally {
             try {
-                preparedStatement.close();
+                PREPARED_STATEMENT.close();
                 CONNECTION.close();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -94,7 +94,7 @@ public class ExpensesServiceMySQL implements ExpensesDAO {
         try {
             CONNECTION = DriverManager.getConnection(URL, LOGIN, PASSWORD);
 
-            preparedStatement = CONNECTION.prepareStatement("INSERT INTO monthly_expenses(year, month, food, " +
+            PREPARED_STATEMENT = CONNECTION.prepareStatement("INSERT INTO monthly_expenses(year, month, food, " +
                     "accountant, number_account, internet, house, cat) VALUES(?, ?, ?, ?, ?, ?, ?, ?)");
             final Field[] fields = expenses.getClass().getDeclaredFields();
 
@@ -114,20 +114,20 @@ public class ExpensesServiceMySQL implements ExpensesDAO {
                 field.setAccessible(true);
                 final String type = sqlFieldType.get(listIndex);
                 if (type.equals("INT")) {
-                    preparedStatement.setInt(paramIndex, field.getInt(expenses));
+                    PREPARED_STATEMENT.setInt(paramIndex, field.getInt(expenses));
                 } else {
                     final String month = StringUtils.capitalize(field.get(expenses).toString().toLowerCase());
-                    preparedStatement.setString(paramIndex, month);
+                    PREPARED_STATEMENT.setString(paramIndex, month);
                 }
                 paramIndex++;
                 listIndex++;
             }
-            preparedStatement.executeUpdate();
+            PREPARED_STATEMENT.executeUpdate();
         } catch (SQLException | IllegalAccessException e) {
             throw new RuntimeException(e);
         } finally {
             try {
-                preparedStatement.close();
+                PREPARED_STATEMENT.close();
                 CONNECTION.close();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -145,17 +145,17 @@ public class ExpensesServiceMySQL implements ExpensesDAO {
         try {
             CONNECTION = DriverManager.getConnection(URL, LOGIN, PASSWORD);
             String delete = "DELETE FROM monthly_expenses WHERE year = ? AND month = ?";
-            preparedStatement = CONNECTION.prepareStatement(delete);
+            PREPARED_STATEMENT = CONNECTION.prepareStatement(delete);
 
-            preparedStatement.setInt(1, year);
-            preparedStatement.setString(2, month);
-            preparedStatement.executeUpdate();
+            PREPARED_STATEMENT.setInt(1, year);
+            PREPARED_STATEMENT.setString(2, month);
+            PREPARED_STATEMENT.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
             try {
-                preparedStatement.close();
+                PREPARED_STATEMENT.close();
                 CONNECTION.close();
             } catch (SQLException e) {
                 throw new RuntimeException(e);

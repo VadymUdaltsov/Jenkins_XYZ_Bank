@@ -9,7 +9,7 @@ public interface WorkerDAO {
 
     void addWorker(String surname, String name);
 
-    void deleteWorker(String surname, String name);
+    void deleteWorker(String passport);
 
-    Worker getWorkerByID(int id);
+    Worker getWorkerByPassport(String passport);
 }

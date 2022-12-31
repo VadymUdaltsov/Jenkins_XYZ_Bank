@@ -26,7 +26,7 @@ public class Program {
         System.out.println("*****************************************************");
 
 
-        workerServiceMySQL.deleteWorker("Lebedynskaya", "Yaroslava");
+        workerServiceMySQL.deleteWorker("UK3LY");
         final List<Worker> updatedWorkersAfterDeleted = workerServiceMySQL.getAllWorkers();
         System.out.println("After Deleted Worker: ");
         for (Worker worker : updatedWorkersAfterDeleted) {
@@ -35,8 +35,8 @@ public class Program {
         System.out.println("*****************************************************");
 
 
-        final Worker firstWorker = workerServiceMySQL.getWorkerByID(1);
-        System.out.println("Get worker by ID");
+        final Worker firstWorker = workerServiceMySQL.getWorkerByPassport("UK1UV");
+        System.out.println("Get worker by Passport");
         System.out.println(firstWorker);
         System.out.println("*****************************************************");
 

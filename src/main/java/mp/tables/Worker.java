@@ -3,16 +3,16 @@ package mp.tables;
 import java.util.Objects;
 
 public class Worker {
-    private int worker_ID;
+    private String passport;
     private String surname;
     private String name;
 
-    public int getWorker_ID() {
-        return worker_ID;
+    public String getWorker_Passport() {
+        return passport;
     }
 
-    public void setWorker_ID(int worker_ID) {
-        this.worker_ID = worker_ID;
+    public void setWorker_Passport(String passport) {
+        this.passport = passport;
     }
 
     public String getSurname() {
@@ -36,18 +36,18 @@ public class Worker {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Worker worker = (Worker) o;
-        return worker_ID == worker.worker_ID && Objects.equals(surname, worker.surname) && Objects.equals(name, worker.name);
+        return passport == worker.passport && Objects.equals(surname, worker.surname) && Objects.equals(name, worker.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(worker_ID, surname, name);
+        return Objects.hash(passport, surname, name);
     }
 
     @Override
     public String toString() {
         return "Worker{" +
-                "worker_ID=" + worker_ID +
+                "passport=" + passport +
                 ", surname='" + surname + '\'' +
                 ", name='" + name + '\'' +
                 '}';

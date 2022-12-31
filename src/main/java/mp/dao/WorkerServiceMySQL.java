@@ -5,43 +5,21 @@ import mp.tables.Worker;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static mp.data.Const.*;
+import static mp.features.StringMethod.getFirstLetter;
 
 public class WorkerServiceMySQL implements WorkerDAO {
 
     @Override
     public List<Worker> getAllWorkers() {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            CONNECTION = DriverManager.getConnection(URL, LOGIN, PASSWORD);
-
-            preparedStatement = CONNECTION.prepareStatement("SELECT * FROM worker");
-            final ResultSet resultSet = preparedStatement.executeQuery();
-            List<Worker> workers = new ArrayList<>();
-
-            while (resultSet.next()) {
-                addWorkers(resultSet, workers);
-            }
-            return workers;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            try {
-                preparedStatement.close();
-                CONNECTION.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
+        return getWorkerList();
     }
 
     @Override
-    public Worker getWorkerByID(int id) {
+    public Worker getWorkerByPassport(String passport) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
@@ -50,13 +28,13 @@ public class WorkerServiceMySQL implements WorkerDAO {
         try {
             CONNECTION = DriverManager.getConnection(URL, LOGIN, PASSWORD);
 
-            preparedStatement = CONNECTION.prepareStatement("SELECT * FROM worker WHERE worker_ID = ?");
-            preparedStatement.setInt(1, id);
+            PREPARED_STATEMENT = CONNECTION.prepareStatement("SELECT * FROM worker WHERE passport = ?");
+            PREPARED_STATEMENT.setString(1, passport);
 
-            final ResultSet resultSet = preparedStatement.executeQuery();
+            final ResultSet resultSet = PREPARED_STATEMENT.executeQuery();
             Worker worker = new Worker();
             while (resultSet.next()) {
-                worker.setWorker_ID(resultSet.getInt("worker_ID"));
+                worker.setWorker_Passport(resultSet.getString("passport"));
                 worker.setSurname(resultSet.getString("surname"));
                 worker.setName(resultSet.getString("name"));
             }
@@ -66,7 +44,7 @@ public class WorkerServiceMySQL implements WorkerDAO {
             throw new RuntimeException(e);
         } finally {
             try {
-                preparedStatement.close();
+                PREPARED_STATEMENT.close();
                 CONNECTION.close();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -82,18 +60,21 @@ public class WorkerServiceMySQL implements WorkerDAO {
             throw new RuntimeException(e);
         }
         try {
-            CONNECTION = DriverManager.getConnection(URL, LOGIN, PASSWORD);
-            String insert = "INSERT INTO worker(surname, name) VALUES (?, ?)";
+            String passport = generatePassport(surname, name);
 
-            preparedStatement = CONNECTION.prepareStatement(insert);
-            preparedStatement.setString(1, surname);
-            preparedStatement.setString(2, name);
-            preparedStatement.executeUpdate();
+            CONNECTION = DriverManager.getConnection(URL, LOGIN, PASSWORD);
+            String insert = "INSERT INTO worker(passport, surname, name) VALUES (?, ?, ?)";
+            PREPARED_STATEMENT = CONNECTION.prepareStatement(insert);
+
+            PREPARED_STATEMENT.setString(1, passport);
+            PREPARED_STATEMENT.setString(2, surname);
+            PREPARED_STATEMENT.setString(3, name);
+            PREPARED_STATEMENT.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
             try {
-                preparedStatement.close();
+                PREPARED_STATEMENT.close();
                 CONNECTION.close();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -102,7 +83,7 @@ public class WorkerServiceMySQL implements WorkerDAO {
     }
 
     @Override
-    public void deleteWorker(String surname, String name) {
+    public void deleteWorker(String passport) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
@@ -110,17 +91,16 @@ public class WorkerServiceMySQL implements WorkerDAO {
         }
         try {
             CONNECTION = DriverManager.getConnection(URL, LOGIN, PASSWORD);
-            String delete = "DELETE FROM worker WHERE surname = ? AND name = ?";
+            String delete = "DELETE FROM worker WHERE passport = ?";
 
-            preparedStatement = CONNECTION.prepareStatement(delete);
-            preparedStatement.setString(1, surname);
-            preparedStatement.setString(2, name);
-            preparedStatement.executeUpdate();
+            PREPARED_STATEMENT = CONNECTION.prepareStatement(delete);
+            PREPARED_STATEMENT.setString(1, passport);
+            PREPARED_STATEMENT.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
             try {
-                preparedStatement.close();
+                PREPARED_STATEMENT.close();
                 CONNECTION.close();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -129,19 +109,67 @@ public class WorkerServiceMySQL implements WorkerDAO {
     }
 
 
-    private static void addWorkers(ResultSet resultSet, List<Worker> workers) {
+    private static void addWorkersInList(ResultSet resultSet, List<Worker> workers) {
         Worker worker = new Worker();
-        if (workers.size() == 0) {
-            worker.setWorker_ID(1);
-        } else {
-            worker.setWorker_ID(workers.get(workers.size() - 1).getWorker_ID() + 1);
-        }
         try {
+            worker.setWorker_Passport(resultSet.getString("passport"));
             worker.setSurname(resultSet.getString("surname"));
             worker.setName(resultSet.getString("name"));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         workers.add(worker);
+    }
+
+    private List<Worker> getWorkerList() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            CONNECTION = DriverManager.getConnection(URL, LOGIN, PASSWORD);
+
+            PREPARED_STATEMENT = CONNECTION.prepareStatement("SELECT * FROM worker");
+            final ResultSet resultSet = PREPARED_STATEMENT.executeQuery();
+            List<Worker> workers = new ArrayList<>();
+
+            while (resultSet.next()) {
+                addWorkersInList(resultSet, workers);
+            }
+            return workers;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                PREPARED_STATEMENT.close();
+                CONNECTION.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    private String generatePassport(String surname, String name) {
+        final List<Worker> workers = getWorkerList();
+        final Worker lastWorker = workers.get(workers.size() - 1);
+        final String lastPassport = lastWorker.getWorker_Passport();
+        final String numberInLastPassport = getNumberInPassport(lastPassport);
+
+        return "UK" + numberInLastPassport +
+                getFirstLetter(surname) +
+                getFirstLetter(name);
+    }
+
+    private String getNumberInPassport(String passport) {
+        Pattern pattern = Pattern.compile("\\d+");
+        Matcher matcher = pattern.matcher(passport);
+        String newNumberToString = null;
+        while (matcher.find()) {
+            final String numberFromPassport = matcher.group();
+            int newNumber = Integer.parseInt(numberFromPassport) + 1;
+            newNumberToString = Integer.toString(newNumber);
+        }
+        return newNumberToString;
     }
 }

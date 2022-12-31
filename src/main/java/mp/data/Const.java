@@ -9,5 +9,5 @@ public class Const {
     public final static String PASSWORD = "Vadym1234";
 
     public static Connection CONNECTION;
-    public static PreparedStatement preparedStatement;
+    public static PreparedStatement PREPARED_STATEMENT;
 }
