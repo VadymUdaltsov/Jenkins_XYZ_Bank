@@ -29,13 +29,11 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="796f8961-3658-4a00-b388-1926385627fd">
-      <console name="Connection" type="STANDARD" schema="mp" session="Main"><![CDATA[select * FROm worker;]]></console>
+      <console name="Connection" type="STANDARD" schema="mysql" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="796f8961-3658-4a00-b388-1926385627fd" object-ref="schemas/mp/tables/worker" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="796f8961-3658-4a00-b388-1926385627fd" dataset="performance_schema.events_stages_history_long" active-filter-id="" />
@@ -54,7 +52,7 @@
     <retain-sticky-names value="false" />
   </component>
   <component name="DBNavigator.Project.FileConnectionMappingManager">
-    <mapping file-url="file://$PROJECT_DIR$/src/main/java/mp/sql/worker.sql" connection-id="796f8961-3658-4a00-b388-1926385627fd" session-id="MAIN" current-schema="mp" />
+    <mapping file-url="file://$PROJECT_DIR$/../SQL-Salary/src/main/java/mp/sql/worker.sql" connection-id="796f8961-3658-4a00-b388-1926385627fd" session-id="MAIN" current-schema="mp" />
   </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />
